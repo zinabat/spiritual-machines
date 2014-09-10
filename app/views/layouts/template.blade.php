@@ -5,6 +5,8 @@
 	@yield('style')
     </head>
     <body>
+	@yield('header')
+	
 	@yield('content')
 	
 	{{ HTML::script('js/jquery-1.11.1.min.js')}}
