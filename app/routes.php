@@ -18,3 +18,11 @@ Route::get('/', function(){
 Route::get('portfolio', function(){
     return View::make('portfolio');
 });
+
+Route::get('about', function(){
+    return View::make('about');
+});
+
+Route::get('contact', function(){
+    return View::make('contact');
+});
