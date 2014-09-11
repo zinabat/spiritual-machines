@@ -14,6 +14,13 @@ img{ max-width:100% }
 nav a,
 nav a:hover, nav a:active, nav a:focus{color:#232122}
 
+#corner-pieces > div{position:fixed; width:0; height:0; pointer-events:none}
+#corner-pieces > .top-left{top:0; left:0}
+#corner-pieces > .top-left > a{display:inline-block; padding:10px; pointer-events:auto}
+#corner-pieces > .top-right{top:0; right:0}
+#corner-pieces > .bot-left{bottom:0; left:0}
+#corner-pieces > .bot-right{bottom:0; right:0}
+
 .brand{color:#e5550f; font-family: 'Sue Ellen Francisco', helvetica, sans-serif; font-weight:normal}
 
 .portfolio-thumbs > div > a{display:block; position:relative; text-decoration:none}
@@ -21,6 +28,15 @@ nav a:hover, nav a:active, nav a:focus{color:#232122}
 .price-tag{position:absolute; top:-5px; left:-5px; padding:5px 8px; background-color:#e5550f; color:#fff}
 
 .full-width{width:100%}
+
+.video-container{position:relative}
+
+.nav-single > a{position:absolute; top:50%; margin-top:-40px; padding:20px; font-size:60px; opacity:0.6; transition:0.3s opacity}
+.nav-single > a:hover{opacity:1}
+.nav-single > .prev{left:-80px}
+.nav-single > .next{right:-80px}
+
+.no-mt{margin-top:0}
 
 /* Buttons */
 .btn{border:0; border-radius:0}
