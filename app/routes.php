@@ -26,3 +26,7 @@ Route::get('about', function(){
 Route::get('contact', function(){
     return View::make('contact');
 });
+
+Route::get('login', function(){
+    return View::make('admin/login');
+});
