@@ -1,12 +1,15 @@
 @extends('layouts.template')
 
-@section('style')
+@section('styles')
 {{ HTML::style('css/style.css') }}
-@stop
+@show
 
 @section('header')
 <div id="corner-pieces">
-    
+    <div class="top-left">@yield('left_corner')</div>
+    <div class="top-right"></div>
+    <div class="bot-left"></div>
+    <div class="bot-right"></div>
 </div>
 
 <header class="text-center">

@@ -3,7 +3,7 @@
     <head>
 	{{ HTML::style('css/bootstrap.min.css') }}
 	{{ HTML::style('css/font-awesome.min.css') }}
-	@yield('style')
+	@yield('styles')
     </head>
     <body>
 	@yield('header')
