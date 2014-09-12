@@ -48,6 +48,10 @@ ul.list-unstyled a:hover, ul.list-unstyled a:active, ul.list-unstyled a:focus{co
 .no-mt{margin-top:0}
 .no-mb{margin-bottom:0}
 
+.table{font-size:12px}
+.table-portfolio>tbody>tr>td:first-child{padding:0; max-width:80px}
+.table-portfolio>tbody>tr>td{vertical-align: middle}
+
 /* Buttons */
 .btn{border:0; border-radius:0}
 .btn-primary{background-color:#4ba61b}

@@ -39,3 +39,7 @@ Route::get('single', function(){
 Route::get('admin', function(){
     return View::make('admin/dashboard');
 });
+
+Route::get('admin/portfolio', function(){
+    return View::make('admin/portfolio');
+});
