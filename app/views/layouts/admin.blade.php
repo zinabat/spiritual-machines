@@ -6,7 +6,7 @@
 @show
 
 @section('header')
-<nav class="navbar navbar-default no-mb" role="navigation">
+<nav class="navbar navbar-admin no-mb" role="navigation">
     <div class="container-fluid">
 	<div class="navbar-header">
 	    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -25,6 +25,9 @@
 		<li><a href="{{ URL::to('about') }}">about</a></li>
 		<li><a href="{{ URL::to('contact') }}">contact</a></li>
 	    </ul>
+	    <ul class="nav navbar-nav navbar-right">
+		<li><a href="{{ URL::to('logout') }}"><i class="fa fa-sign-out"></i> Logout</a></li>
+	    </ul>
 	</div>
     </div>
 </nav>
@@ -34,13 +37,12 @@
 <div class="container-fluid has-faux-col">
     <div class="row">
 	<div class="col-md-2 faux-col"></div>
-	<div class="col-md-2">
+	<div class="col-md-2 sidebar">
 	    <ul class="nav nav-pills nav-stacked">
 		<li><a href="{{ URL::to('admin') }}">Dashboard</a></li>
 		<li><a href="{{ URL::to('admin/auctions') }}">Auctions</a></li>
 		<li><a href="{{ URL::to('admin/portfolio') }}">Portfolio</a></li>
 		<li><a href="{{ URL::to('admin/analytics') }}">Analytics</a></li>
-		<li><a href="{{ URL::to('logout') }}">Logout</a></li>
 	    </ul>
 	</div>
 	<div class="col-md-10">

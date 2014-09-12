@@ -11,8 +11,8 @@ a:hover, a:active, a:focus{color:#4b8c1b}
 
 img{ max-width:100% }
 
-nav a,
-nav a:hover, nav a:active, nav a:focus{color:#232122}
+ul.list-unstyled a,
+ul.list-unstyled a:hover, ul.list-unstyled a:active, ul.list-unstyled a:focus{color:#232122}
 
 #corner-pieces > div{position:fixed; width:0; height:0; pointer-events:none}
 #corner-pieces > .top-left{top:0; left:0}
@@ -21,7 +21,13 @@ nav a:hover, nav a:active, nav a:focus{color:#232122}
 #corner-pieces > .bot-left{bottom:0; left:0}
 #corner-pieces > .bot-right{bottom:0; right:0}
 
+.navbar{border-radius:0}
+
+.nav-pills>li>a{border-radius:0}
+
 .brand{color:#e5550f; font-family: 'Sue Ellen Francisco', helvetica, sans-serif; font-weight:normal}
+
+.sidebar{padding:15px 0 0 0}
 
 .portfolio-thumbs > div > a{display:block; position:relative; text-decoration:none}
 
@@ -30,7 +36,7 @@ nav a:hover, nav a:active, nav a:focus{color:#232122}
 .full-width{width:100%}
 
 .has-faux-col{height:100%}
-.faux-col{position:absolute; height:100%; background:#f0f0f0; box-shadow:inset -5px -1px 15px 0 rgba(0,0,0,0.1)}
+.faux-col{position:absolute; height:100%; background:#ECF5E8; box-shadow:inset -5px -1px 15px 0 rgba(0,0,0,0.1)}
 
 .video-container{position:relative}
 
