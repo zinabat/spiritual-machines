@@ -3,8 +3,25 @@
 @section('inner_content')
 <h1>All Artwork</h1>
 <a href="#" class="btn btn-primary"><i class="fa fa-plus"></i> Add a New Piece</a>
-<div class="clearfix"></div>
-<ul class="pagination">
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid" style="padding-left:0">
+	<ul class="nav navbar-nav">
+	    <li class="active"><a href="#">View All</a></li>
+	    <li><a href="#">Active Auctions</a></li>
+	    <li><a href="#">Portfolio</a></li>
+	</ul>
+	<form method="get" class="navbar-form navbar-right">
+	    <div class="input-group">
+		<input type="text" class="form-control">
+		<span class="input-group-btn">
+		    <button class="btn btn-default" type="button"><i class="fa fa-search"></i></button>
+		</span>
+	    </div>
+	</form>
+    </div>
+</nav>
+<ul class="pagination pull-right no-mt">
     <li><a href="#">&laquo;</a></li>
     <li class="active"><a href="#">1</a></li>
     <li><a href="#">2</a></li>
@@ -13,6 +30,17 @@
     <li><a href="#">5</a></li>
     <li><a href="#">&raquo;</a></li>
 </ul>
+<strong>Sort by: </strong>
+<div class="btn-group">
+    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Date Added</button>
+    <ul class="dropdown-menu" role="menu">
+	<li><a href="#">Date Created</a></li>
+	<li><a href="#">Title</a></li>
+	<li><a href="#">Price</a></li>
+    </ul>
+    <button class="btn btn-default"><i class="fa fa-caret-down"></i></button>
+</div>
+
 <table class="table table-hover table-portfolio" cellspacing="0">
     <thead>
 	<th>Thumbnail</th>

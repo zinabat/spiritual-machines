@@ -41,5 +41,5 @@ Route::get('admin', function(){
 });
 
 Route::get('admin/artwork', function(){
-    return View::make('admin/artwork');
+    return View::make('admin/portfolio');
 });
