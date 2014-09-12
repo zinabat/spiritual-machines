@@ -30,3 +30,12 @@ Route::get('contact', function(){
 Route::get('login', function(){
     return View::make('admin/login');
 });
+
+/* Dummy pages */
+Route::get('single', function(){
+    return View::make('single');
+});
+
+Route::get('admin', function(){
+    return View::make('admin/dashboard');
+});
