@@ -40,8 +40,7 @@
 	<div class="col-md-2 sidebar">
 	    <ul class="nav nav-pills nav-stacked">
 		<li @if( Request::is('admin')) class="active"@endif><a href="{{ URL::to('admin') }}">Dashboard</a></li>
-		<li @if( Request::is('admin/auctions')) class="active"@endif><a href="{{ URL::to('admin/auctions') }}">Auctions</a></li>
-		<li @if( Request::is('admin/portfolio')) class="active"@endif><a href="{{ URL::to('admin/portfolio') }}">Portfolio</a></li>
+		<li @if( Request::is('admin/artwork')) class="active"@endif><a href="{{ URL::to('admin/artwork') }}">Artwork</a></li>
 		<li @if( Request::is('admin/analytics')) class="active"@endif><a href="{{ URL::to('admin/analytics') }}">Analytics</a></li>
 	    </ul>
 	</div>

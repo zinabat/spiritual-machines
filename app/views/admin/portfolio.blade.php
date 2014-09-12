@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('inner_content')
-<h1>Portfolio</h1>
+<h1>All Artwork</h1>
 <a href="#" class="btn btn-primary"><i class="fa fa-plus"></i> Add a New Piece</a>
 <div class="clearfix"></div>
 <ul class="pagination">
