@@ -24,6 +24,25 @@ ul.list-unstyled a:hover, ul.list-unstyled a:active, ul.list-unstyled a:focus{co
 .navbar{border-radius:0}
 
 .nav-pills>li>a{border-radius:0}
+.nav-pills>li.active>a, 
+.nav-pills>li.active>a:hover, 
+.nav-pills>li.active>a:focus{background-color:#4ba61b}
+
+.pagination>li>a, .pagination>li>span{background-color:#000; border-color:#232122; color:#4ba61b}
+.pagination>li:last-child>a, 
+.pagination>li:last-child>span,
+.pagination>li:first-child>a, 
+.pagination>li:first-child>span{border-radius:0}
+.pagination>li>a:hover, 
+.pagination>li>span:hover, 
+.pagination>li>a:focus, 
+.pagination>li>span:focus{background-color:#e5550f; border-color:#D35010; color:#fff}
+.pagination>.active>a, 
+.pagination>.active>span, 
+.pagination>.active>a:hover, 
+.pagination>.active>span:hover, 
+.pagination>.active>a:focus, 
+.pagination>.active>span:focus{background-color:#4ba61b; border-color:#4ba61b}
 
 .brand{color:#e5550f; font-family: 'Sue Ellen Francisco', helvetica, sans-serif; font-weight:normal}
 
