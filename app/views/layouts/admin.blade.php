@@ -3,7 +3,7 @@
 @section('styles')
 {{ HTML::style('css/style.css') }}
 {{ HTML::style('css/admin.css') }}
-@show
+@stop
 
 @section('header')
 <nav class="navbar navbar-admin no-mb" role="navigation">
