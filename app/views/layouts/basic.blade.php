@@ -2,7 +2,7 @@
 
 @section('styles')
 {{ HTML::style('css/style.css') }}
-@show
+@stop
 
 @section('header')
 <div id="corner-pieces">

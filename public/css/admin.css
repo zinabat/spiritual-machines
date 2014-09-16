@@ -1,0 +1,14 @@
+/* 
+    Created on : 11-Sep-2014, 9:38:52 PM
+    Author     : zina
+*/
+.navbar-admin{
+    background-color: #DA6B36;
+    background-image: -webkit-linear-gradient(top, #DA6B36, #FFAB5E);
+    background-image:         linear-gradient(to bottom, #DA6B36, #FFAB5E);
+    border:0
+}
+
+.navbar-admin a, .navbar-admin a:hover, .navbar-admin a:active, .navbar-admin a:focus{color:#fff}
+.navbar-admin .nav>li>a:hover, .navbar-admin .nav>li>a:focus{background-color:#EEB55F}
+.nav>li>a:hover, .nav>li>a:focus{background-color:rgba(126, 187, 103, 0.3)}
