@@ -31,15 +31,16 @@
     <li><a href="#">&raquo;</a></li>
 </ul>
 <strong>Sort by: </strong>
-<div class="btn-group">
-    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Date Added</button>
+<div class="btn-group" style="margin-right:15px">
+    <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">Date Added</button>
     <ul class="dropdown-menu" role="menu">
 	<li><a href="#">Date Created</a></li>
 	<li><a href="#">Title</a></li>
 	<li><a href="#">Price</a></li>
     </ul>
-    <button class="btn btn-default"><i class="fa fa-caret-down"></i></button>
+    <button class="btn btn-info"><i class="fa fa-caret-down"></i></button>
 </div>
+<strong>2</strong> total pieces.
 
 <table class="table table-hover table-portfolio" cellspacing="0">
     <thead>
