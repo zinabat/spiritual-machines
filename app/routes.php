@@ -28,22 +28,23 @@ Route::get('contact', function(){
 });
 
 Route::get('login', function(){
-    return View::make('admin/login');
+    if(Auth::check()) return Redirect::to('admin/dashboard');
+    
+    return View::make('admin.login');
 });
 
-/* Dummy pages */
-Route::get('single', function(){
-    return View::make('single');
+Route::post('login', function(){
+    $input = Input::all();
+    if(Auth::attempt(array(
+	'username' => $input['username'], 
+	'password' => $input['password'])
+    )) return Redirect::to('admin/dashboard');
+    
+    return Redirect::to('login')->withInput();
 });
 
-Route::get('admin', function(){
-    return View::make('admin/dashboard');
+/* admin routes */
+Route::get('admin/dashboard', function(){
+    return View::make('admin.dashboard');
 });
 
-Route::get('admin/artwork', function(){
-    return View::make('admin/portfolio');
-});
-
-Route::get('admin/artwork/create', function(){
-    return View::make('admin/artwork-create');
-});

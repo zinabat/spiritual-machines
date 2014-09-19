@@ -7,27 +7,31 @@ use Illuminate\Auth\Reminders\RemindableInterface;
 
 class User extends Eloquent implements UserInterface, RemindableInterface {
 
-	use UserTrait, RemindableTrait;
+    use UserTrait, RemindableTrait;
 
-	/**
-	 * The database table used by the model.
-	 *
-	 * @var string
-	 */
-	protected $table = 'users';
+    /**
+     * The database table used by the model.
+     *
+     * @var string
+     */
+    protected $table = 'users';
 
-	/**
-	 * The attributes excluded from the model's JSON form.
-	 *
-	 * @var array
-	 */
-	protected $hidden = array('password', 'remember_token');
-	
-	public $id = 0;
-	public $username = null;
-	public $password = null;
-	public $email = null;
-	public $created_at = null;
-	public $updated_at = null;
+    /**
+     * The attributes excluded from the model's JSON form.
+     *
+     * @var array
+     */
+    protected $hidden = array('password', 'remember_token');
+
+    /**
+     * The attributes associated with database columns.
+     * 
+     */
+    public $id;
+    public $username;
+    public $password;
+    public $email;
+    public $created_at;
+    public $updated_at;
 
 }

@@ -24,11 +24,11 @@ class AdminSeeder extends Seeder {
     {
         DB::table('users')->delete();
 
-        User::create(array(
-	    'username' => 'miketiido',
-	    'password' => 'fakepass1',
-	    'email' => 'foo@bar.com'
-	));
+        $admin = new User;
+	$admin->username = 'miketiido';
+	$admin->password =  Hash::make('fakepass1');
+	$admin->email = 'foo@bar.com';
+	$admin->save();
     }
 
 }
