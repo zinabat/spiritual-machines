@@ -9,9 +9,26 @@ class DatabaseSeeder extends Seeder {
 	 */
 	public function run()
 	{
-		Eloquent::unguard();
+	    Eloquent::unguard();
 
-		// $this->call('UserTableSeeder');
+	    $this->call('AdminSeeder');
+	    
+	    $this->command->info('Administrator added to the user table.');
 	}
+
+}
+
+class AdminSeeder extends Seeder {
+
+    public function run()
+    {
+        DB::table('users')->delete();
+
+        User::create(array(
+	    'username' => 'miketiido',
+	    'password' => 'fakepass1',
+	    'email' => 'foo@bar.com'
+	));
+    }
 
 }
