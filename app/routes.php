@@ -10,7 +10,6 @@
 | and give it the Closure to execute when that URI is requested.
 |
 */
-
 Route::get('/', function(){
     return View::make('index');
 });
@@ -27,24 +26,24 @@ Route::get('contact', function(){
     return View::make('contact');
 });
 
-Route::get('login', function(){
-    if(Auth::check()) return Redirect::to('admin/dashboard');
-    
-    return View::make('admin.login');
-});
+// route–model binding
+Route::model('artworks', 'Artwork');
 
-Route::post('login', function(){
-    $input = Input::all();
-    if(Auth::attempt(array(
-	'username' => $input['username'], 
-	'password' => $input['password'])
-    )) return Redirect::to('admin/dashboard');
-    
-    return Redirect::to('login')->withInput();
-});
+// public routes
+Route::resource('artworks', 'ArtworksController', array(
+    'only' => array('index', 'show')));
+Route::resource('sessions', 'SessionsController', array(
+    'only' => array('create', 'store', 'destroy')));
+Route::get('login', 'SessionsController@create');
 
-/* admin routes */
-Route::get('admin/dashboard', function(){
-    return View::make('admin.dashboard');
+// admin routes
+Route::group(array('prefix' => 'admin'), function()
+{
+    Route::get('/', function(){
+	return View::make('admin.dashboard');
+    });
+    Route::get('dashboard', function(){
+	return View::make('admin.dashboard');
+    });
+    Route::resource('artworks', 'AdminArtworksController');
 });
-
