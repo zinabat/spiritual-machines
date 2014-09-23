@@ -85,6 +85,8 @@ ul.list-unstyled a:hover, ul.list-unstyled a:active, ul.list-unstyled a:focus{co
 .btn-default.active, .btn-default.active:hover{background-color:#4ba61b; color:#fff}
 .btn-primary{background-color:#4ba61b}
 .btn-primary:hover{background-color:#4b8c1b}
+.btn-nav{background-color:#2E150F; color:#fff; padding:15px 15px; line-height:20px}
+.btn-nav:hover{background-color:#5A2113; color:#fff}
 .btn-lg{font-size:20px; font-weight:bold}
 
 .input-group-btn>.btn{border-width:1px}

@@ -26,7 +26,11 @@
 		<li><a href="{{ URL::to('contact') }}">contact</a></li>
 	    </ul>
 	    <ul class="nav navbar-nav navbar-right">
-		<li><a href="{{ URL::to('logout') }}"><i class="fa fa-sign-out"></i> Logout</a></li>
+		<li>
+		    {{ Form::open(array('url' => 'sessions/' . Auth::id(), 'method' => 'delete')) }}
+		    <button type="submit" class="btn btn-nav"><i class="fa fa-sign-out"></i> Logout</button>
+		    {{ Form::close() }}
+		</li>
 	    </ul>
 	</div>
     </div>
@@ -40,7 +44,7 @@
 	<div class="col-md-2 sidebar">
 	    <ul class="nav nav-pills nav-stacked">
 		<li @if( Request::is('admin')) class="active"@endif><a href="{{ URL::to('admin') }}">Dashboard</a></li>
-		<li @if( Request::is('admin/artwork')) class="active"@endif><a href="{{ URL::to('admin/artwork') }}">Artwork</a></li>
+		<li @if( Request::is('admin/artworks')) class="active"@endif><a href="{{ URL::to('admin/artworks') }}">Artwork</a></li>
 		<li @if( Request::is('admin/analytics')) class="active"@endif><a href="{{ URL::to('admin/analytics') }}">Analytics</a></li>
 	    </ul>
 	</div>
