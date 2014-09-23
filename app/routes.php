@@ -10,7 +10,6 @@
 | and give it the Closure to execute when that URI is requested.
 |
 */
-
 Route::get('/', function(){
     return View::make('index');
 });
@@ -27,6 +26,24 @@ Route::get('contact', function(){
     return View::make('contact');
 });
 
-Route::get('login', function(){
-    return View::make('admin/login');
+// route–model binding
+Route::model('artworks', 'Artwork');
+
+// public routes
+Route::resource('artworks', 'ArtworksController', array(
+    'only' => array('index', 'show')));
+Route::resource('sessions', 'SessionsController', array(
+    'only' => array('create', 'store', 'destroy')));
+Route::get('login', 'SessionsController@create');
+
+// admin routes
+Route::group(array('prefix' => 'admin'), function()
+{
+    Route::get('/', function(){
+	return View::make('admin.dashboard');
+    });
+    Route::get('dashboard', function(){
+	return View::make('admin.dashboard');
+    });
+    Route::resource('artworks', 'AdminArtworksController');
 });
