@@ -26,9 +26,6 @@ Route::get('contact', function(){
     return View::make('contact');
 });
 
-// route–model binding
-Route::model('artworks', 'Artwork');
-
 // public routes
 Route::resource('artworks', 'ArtworksController', array(
     'only' => array('index', 'show')));
@@ -46,4 +43,10 @@ Route::group(array('prefix' => 'admin'), function()
 	return View::make('admin.dashboard');
     });
     Route::resource('artworks', 'AdminArtworksController');
+});
+
+// View composers. Move this later.
+View::composer('layouts.admin', function($view)
+{
+    $view->with('success', Session::has('success') ? Session::get('success') : false);
 });

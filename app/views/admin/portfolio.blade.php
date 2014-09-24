@@ -2,7 +2,7 @@
 
 @section('inner_content')
 <h1>All Artwork</h1>
-<a href="#" class="btn btn-primary"><i class="fa fa-plus"></i> Add a New Piece</a>
+<a href="{{ URL::to('admin/artworks/create') }}" class="btn btn-primary"><i class="fa fa-plus"></i> Add a New Piece</a>
 
 <nav class="navbar navbar-default">
     <div class="container-fluid" style="padding-left:0">
