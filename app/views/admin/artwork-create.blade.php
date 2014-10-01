@@ -6,18 +6,12 @@
 <br><br>
 
 @if( Route::currentRouteName() == 'admin.artworks.create' )
-{{ Form::open(array('route' =>  'admin.artworks.store') ) }}
+{{ Form::open(array('route' =>  'admin.artworks.store', 'files' => true) ) }}
 @else
-{{ Form::model($artwork, array('route' =>  array('admin.artworks.update', $artwork->id), 'method' => 'put') ) }}
+{{ Form::model($artwork, array('route' =>  array('admin.artworks.update', $artwork->id), 'method' => 'put', 'files' => true) ) }}
 @endif
 
-@if($errors->has())
-    <div class="alert alert-danger">
-    @foreach ($errors->all() as $error)
-	{{ $error }}<br>
-    @endforeach
-    </div>
-@endif
+@include('includes.errors')
 
 <div class="form-group">
     {{ Form::label('title') }}
@@ -48,8 +42,8 @@
     </span>
 </div>
 <div class="form-group">
-    {{ Form::label('thumbnail') }}
-    {{ Form::file('thumbnail', array('class' => 'form-control')) }}
+    {{ Form::label('imageFile') }}
+    {{ Form::file('imageFile', array('class' => 'form-control')) }}
 </div>
 <div class="form-group">
     {{ Form::label('date_created', 'Date Created') }}

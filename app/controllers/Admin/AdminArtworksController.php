@@ -44,7 +44,14 @@ class AdminArtworksController extends \BaseController {
 	//fill the artwork object and sanitize.
 	$this->artwork->fill( Input::all() )->sanitize();
 	
+	//handle images
+	if(Input::hasFile('imageFile')){
+	    $this->artwork->imageFile = Input::file('imageFile');
+	}
+	
+	
 	if( $this->artwork->isValid() ){
+	    $this->artwork->createThumbnails();
 	    $this->artwork->save();
 	    return Redirect::to('admin/artworks/' . $this->artwork->id . '/edit')->withSuccess('Artwork has been added.');
 	}
