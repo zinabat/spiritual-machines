@@ -4,6 +4,9 @@
 <div class="row">
     <div class="col-md-6 col-md-offset-3">
     {{ Form::open(array('url' => 'sessions')) }}
+    
+	@include('includes.errors')
+	
 	<div class="form-group">
 	    {{ Form::label('username') }}
 	    {{ Form::text('username', null, array('class' => 'form-control')) }}

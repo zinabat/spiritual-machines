@@ -25,13 +25,33 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
     /**
      * The attributes associated with database columns.
-     * 
-     */
+
     public $id;
     public $username;
     public $password;
     public $email;
     public $created_at;
     public $updated_at;
+     * 
+     */
+    
+    public $errors;
+    
+    /**
+     * Validate login credentials so we can return useful errors.
+     * 
+     * @param array $input
+     */
+    public function credentialsAreValid($input){
+	$validation = Validator::make($input, array(
+	    'username' => 'required|exists:users',
+	    'password' => 'required'
+	));
+	
+	if($validation->passes()) return true;
+	
+	$this->errors = $validation->messages();
+	return false;
+    }
 
 }

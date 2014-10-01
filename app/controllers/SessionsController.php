@@ -2,6 +2,12 @@
 
 class SessionsController extends BaseController {
     
+    protected $user;
+    
+    public function __construct(User $user) {
+	$this->user = $user;
+    }
+    
     /**
      * Display a login page.
      * GET /sessions/create
@@ -22,16 +28,19 @@ class SessionsController extends BaseController {
      */
     public function store(){
 	$input = Input::all();
-	//run some validation first
 	
-	if( Auth::attempt(array(
-	    'username' => $input['username'], 
-	    'password' => $input['password']
-	)) ){
-	    return Redirect::to('admin/dashboard');
+	if( $this->user->credentialsAreValid($input) ){
+	    if( Auth::attempt(array(
+		'username' => $input['username'], 
+		'password' => $input['password']
+	    )) ){
+		return Redirect::to('admin/dashboard');
+	    }
+	    //If the credentials are valid, but authentication fails anyway, the password must be wrong.
+	    $this->user->errors = "Login incorrect.";
 	}
 
-	return Redirect::to('login')->withInput();
+	return Redirect::to('login')->withInput()->withErrors( $this->user->errors );
     }
     
      /**
