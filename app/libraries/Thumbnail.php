@@ -8,6 +8,7 @@ class Thumbnail extends Upload {
 
     protected $original;
     protected $imageLib;
+    public $localPath = '/artwork';
     public $target = array(
 	'height' => null,
 	'width' => null,
@@ -17,7 +18,7 @@ class Thumbnail extends Upload {
     );
 
     public function __construct() {
-	$this->uploadFolder = public_path() . '/artwork';
+	$this->uploadFolder = public_path() . $this->localPath;
     }
 
     public function cropFromCenter($imageObject) {
@@ -49,34 +50,32 @@ class Thumbnail extends Upload {
 
 	if ( !is_null($this->target['ratio']) ) $this->setTargetRatio();
 
-	$this->original = Image::make( $this->file->getRealPath() );
-	$this->original->ratio = $this->original->width() / $this->original->height();
 	$this->setTargetPath();
+	$this->saveOriginal();
 
 	/* If the image ratio is different than the target, we need to calculate which dimension to resize by.
 	 * Then we have to crop it from the center.
 	 */
 	if ($this->original->ratio != $this->target['ratio']) {
-	    $newImage = $this->resizeProportionally();
+	    $newImage = $this->resizeProportionally( $this->target );
 	    $this->cropFromCenter($newImage);
 	} else {
 	    $newImage = $this->original->resize($this->target['width'], null, function($constraint){
 		$constraint->aspectRatio();
 	    });
 	}
-	dd($this->target['path']);
-	$newImage->save( $this->target['path'] );
+	$newImage->save( str_replace('.', '_'.$this->target['width'].'.', $this->target['path']) );
     }
 
-    public function resizeProportionally() {
+    public function resizeProportionally( $target ) {
 	//if the ratio between the width and height is smaller than the wanted ratio
-	if (($this->original->ratio) < ($this->target['ratio'])) {
+	if ($this->original->ratio < $target['ratio']) {
 	    //then shrink the width and preserve the aspect ratio
-	    return $this->original->resize($this->target['width'], null, function($constraint){
+	    return $this->original->resize($target['width'], null, function($constraint){
 		$constraint->aspectRatio();
 	    });
 	}
-	return $this->original->resize(null, $this->target['height'], function($constraint){
+	return $this->original->resize(null, $target['height'], function($constraint){
 		$constraint->aspectRatio();
 	    });
     }
@@ -96,7 +95,19 @@ class Thumbnail extends Upload {
     }
     
     public function setTargetPath(){
-	$this->target['path'] = sprintf('%s_%s.%s', $this->uploadFolder . $this->target['imageName'], $this->target['width'], $this->file->getClientOriginalExtension());
+	$this->target['path'] = sprintf('%s.%s', $this->uploadFolder . $this->target['imageName'], $this->file->getClientOriginalExtension());
+	$this->localPath .= $this->target['imageName'] .'.'.$this->file->getClientOriginalExtension();
+    }
+    
+    public function saveOriginal(){
+	$this->original = Image::make( $this->file->getRealPath() );
+	$this->original->ratio = $this->original->width() / $this->original->height();
+	
+	if($this->original->width() > 1000 || $this->original->height() > 1000){
+	    $this->resizeProportionally(array('ratio' => 1, 'width' => 1000, 'height' => 1000));
+	}
+	$this->original->save($this->target['path']);
+	
     }
 
 }

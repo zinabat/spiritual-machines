@@ -5,6 +5,7 @@ namespace Libraries;
 class Upload {
     public $errors;
     public $file;
+    public $localPath = '';
     protected $uploadFolder;
     
     public function makeFolders(){
@@ -15,7 +16,7 @@ class Upload {
 	    $fullPath.= '/' . $folder;
 	    if(!is_dir( $fullPath )) mkdir( $fullPath );
 	}
-	
+	$this->localPath .= '/' . implode('/', $hash) . '/';
 	return $fullPath . '/';
     }
     

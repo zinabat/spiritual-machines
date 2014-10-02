@@ -19,7 +19,7 @@ class AdminArtworksController extends \BaseController {
      */
     public function index()
     {
-	return View::make('admin/portfolio');
+	return View::make('admin/portfolio')->with('artworks', $this->artwork->paginate(20));
     }
 
     /**
@@ -42,7 +42,7 @@ class AdminArtworksController extends \BaseController {
     public function store()
     {
 	//fill the artwork object and sanitize.
-	$this->artwork->fill( Input::all() )->sanitize();
+	$this->artwork->fill( Input::all() );
 	
 	//handle images
 	if(Input::hasFile('imageFile')){
@@ -104,7 +104,8 @@ class AdminArtworksController extends \BaseController {
      */
     public function destroy($id)
     {
-	    //
+	$this->artwork->destroy($id);
+	return Redirect::to('admin/artworks')->withSuccess('Artwork deleted.');
     }
 
 }

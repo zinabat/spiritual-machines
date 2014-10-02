@@ -18,31 +18,17 @@ class Artwork extends \Eloquent {
     
     /**
      * The attributes associated with database columns. Leaves these guys commented 
-     * unless you want random things to break. Laravel will set them to null values 
-     * when loading Views that contain a model object.
+     * unless you want random things to break.
 	public $id;
 	public $title;
 	public $description;
 	public $sold_price;
 	public $auction_link;
-	public $thumbnail;
+	public $thumbnail_path;
 	public $date_created;
 	public $created_at;
 	public $updated_at;
      */
-    
-    /**
-     * Sanitize object properties.
-     * 
-     * @return array
-     */
-    public function sanitize(){
-	$this->title = e(trim( $this->title ));
-	$this->description = e( $this->description );
-	$this->sold_price = trim( $this->sold_price );
-	$this->auction_link = trim( $this->auction_link );
-	$this->date_created = date('F j, Y', strtotime( $this->date_created ));
-    }
     
     public function isValid(){
 	//Check this object against its rule set.
@@ -58,16 +44,68 @@ class Artwork extends \Eloquent {
 	if(is_null( $this->imageFile )) return false;
 	
 	$this->thumbnail = App::make('Thumbnail');
-	//create thumbnails from the supplied image.
 	$this->thumbnail->target = array(
 	    'width' => 300,
 	    'ratio' => '16:9',
 	    'imageName' => $this->generateNameFromTitle()
 	);
 	$this->thumbnail->create( $this->imageFile );
+	$this->thumbnail_path = $this->thumbnail->localPath;
     }
     
     public function generateNameFromTitle(){
 	return strtolower( substr(preg_replace('/[^A-Za-z0-9]/', '', $this->title ), 0, 12 ) . str_random(8) );
+    }
+    
+    public function getThumbnail($size = ''){
+	if(empty($size)) return HTML::image($this->thumbnail_path);
+	
+	return HTML::image(str_replace('.', '_'.$size.'.', $this->thumbnail_path));
+    }
+    
+    /**
+     * Accessors
+     */
+    public function getDateCreatedAttribute($value){
+	if($value == '0000-00-00' || !$value) return '';
+
+	$date = DateTime::createFromFormat('Y-m-d', $value);
+	return $date->format(Config::get('display.date_format'));
+    }
+    
+    public function getCreatedAtAttribute($value){
+	$date = new DateTime($value);
+	return $date->format(Config::get('display.date_format'));
+    }
+    
+    public function getSoldPriceAttribute($value){
+	if($value === '0') return '';
+	return $value;
+    }
+    
+    /**
+     * Mutators
+     * These are being used instead of my usual sanitizeAndFill function to avoid
+     * issues with accessors and empty inputs. Also it's probably better to do things
+     * this way.
+     */
+    public function setTitleAttribute($value){
+	$this->attributes['title'] = e(trim($value));
+    }
+    
+    public function setDescriptionAttribute($value){
+	$this->attributes['description'] = e($value);
+    }
+    
+    public function setSoldPriceAttribute($value){
+	$this->attributes['sold_price'] = (int) trim($value);
+    }
+    
+    public function setAuctionLinkAttribute($value){
+	$this->attributes['auction_link'] = trim($value);
+    }
+    
+    public function setDateCreatedAttribute($value){
+	$this->attributes['date_created'] = date('Y-m-d', strtotime( $value ));
     }
 }

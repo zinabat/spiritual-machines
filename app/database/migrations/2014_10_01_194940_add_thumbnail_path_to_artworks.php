@@ -15,6 +15,7 @@ class AddThumbnailPathToArtworks extends Migration {
 		Schema::table('artworks', function(Blueprint $table)
 		{
 			$table->string('thumbnail_path');
+			$table->dropColumn('thumbnail');
 		});
 	}
 
@@ -29,6 +30,7 @@ class AddThumbnailPathToArtworks extends Migration {
 		Schema::table('artworks', function(Blueprint $table)
 		{
 			$table->dropColumn('thumbnail_path');
+			$table->string('thumbnail');
 		});
 	}
 
