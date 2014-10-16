@@ -9,12 +9,13 @@ class Artwork extends \Eloquent {
 	'description' => 'max:255',
 	'sold_price' => 'integer',
 	'auction_link' => 'url',
-	'thumbnail_path' => 'artwork/default.jpg',
 	'imageFile' => 'image|max:35000' //not a column
     );
     
     public $errors;
+    public $success;
     public $imageFile;
+    public $old_thumbnail_path;
     
     /**
      * The attributes associated with database columns. Leaves these guys commented 
@@ -40,6 +41,11 @@ class Artwork extends \Eloquent {
 	return false;
     }
     
+    public function hasThumbnail(){
+	if(empty($this->thumbnail_path)) return false;
+	return true;
+    }
+    
     public function createThumbnails(){
 	if(is_null( $this->imageFile )) return false;
 	
@@ -49,8 +55,23 @@ class Artwork extends \Eloquent {
 	    'ratio' => '16:9',
 	    'imageName' => $this->generateNameFromTitle()
 	);
-	$this->thumbnail->create( $this->imageFile );
+	$success = $this->thumbnail->create( $this->imageFile );
+	
+	//is there already a thumbnail?
+	if($this->hasThumbnail() && $success){ 
+	    $this->old_thumbnail_path = $this->thumbnail_path;
+	    $this->deleteThumbnails();
+	}
+	
 	$this->thumbnail_path = $this->thumbnail->localPath;
+    }
+    
+    public function deleteThumbnails(){
+	$path = asset($this->old_thumbnail_path);
+	if( file_exists(asset($this->old_thumbnail_path)) ){
+	    unlink($path);
+	    unlink(str_replace('.', '_300.', $path));
+	}
     }
     
     public function generateNameFromTitle(){
@@ -65,6 +86,7 @@ class Artwork extends \Eloquent {
     
     /**
      * Accessors
+     * 
      */
     public function getDateCreatedAttribute($value){
 	if($value == '0000-00-00' || !$value) return '';

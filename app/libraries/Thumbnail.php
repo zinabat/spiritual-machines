@@ -64,7 +64,7 @@ class Thumbnail extends Upload {
 		$constraint->aspectRatio();
 	    });
 	}
-	$newImage->save( str_replace('.', '_'.$this->target['width'].'.', $this->target['path']) );
+	return $newImage->save( str_replace('.', '_'.$this->target['width'].'.', $this->target['path']) );
     }
 
     public function resizeProportionally( $target ) {

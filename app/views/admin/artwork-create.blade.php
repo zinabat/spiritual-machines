@@ -5,7 +5,7 @@
 <a href="{{ URL::to('admin/artworks') }}" class="btn btn-info"><i class="fa fa-arrow-left"></i> Back to Artwork</a>
 <br><br>
 
-@if( Route::currentRouteName() == 'admin.artworks.create' )
+@if( $mode == 'create' )
 {{ Form::open(array('route' =>  'admin.artworks.store', 'files' => true) ) }}
 @else
 {{ Form::model($artwork, array('route' =>  array('admin.artworks.update', $artwork->id), 'method' => 'put', 'files' => true) ) }}
@@ -43,6 +43,10 @@
 </div>
 <div class="form-group">
     {{ Form::label('imageFile') }}
+    @if($mode == 'edit' && $artwork->hasThumbnail())
+    <br>
+    {{ $artwork->getThumbnail(300) }}
+    @endif
     {{ Form::file('imageFile', array('class' => 'form-control')) }}
 </div>
 <div class="form-group">

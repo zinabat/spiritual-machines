@@ -42,7 +42,8 @@ Route::group(array('prefix' => 'admin', 'before' => 'auth'), function()
     Route::get('dashboard', function(){
 	return View::make('admin.dashboard');
     });
-    Route::resource('artworks', 'AdminArtworksController');
+    Route::resource('artworks', 'AdminArtworksController', array(
+	'except' => 'show'));
 });
 
 // View composers. Move this later.
