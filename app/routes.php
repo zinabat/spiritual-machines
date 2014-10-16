@@ -34,7 +34,7 @@ Route::resource('sessions', 'SessionsController', array(
 Route::get('login', 'SessionsController@create');
 
 // admin routes
-Route::group(array('prefix' => 'admin'), function()
+Route::group(array('prefix' => 'admin', 'before' => 'auth'), function()
 {
     Route::get('/', function(){
 	return View::make('admin.dashboard');

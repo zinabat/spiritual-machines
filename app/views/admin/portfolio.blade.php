@@ -62,12 +62,16 @@
 	<td>${{ $artwork->sold_price }}</td>
 	<td>{{ $artwork->description }}</td>
 	<td>
+	    {{ Form::open(array('method' => 'delete', 'route' => array('admin.artworks.destroy', $artwork->id) )) }}
 	    <div class="btn-group">
-		<button class="btn btn-danger"><i class="fa fa-trash"></i></button>
-		<button class="btn btn-default"><i class="fa fa-pencil"></i></button>
-		<button class="btn btn-default"><i class="fa fa-share"></i></button>
-		<button class="btn btn-default"><i class="fa fa-external-link"></i></button>
+		<button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this artwork?')"><i class="fa fa-trash"></i></button>
+		<a href="{{ URL::route('admin.artworks.edit', $artwork->id) }}" class="btn btn-default"><i class="fa fa-pencil"></i></a>
+		<a href="{{ URL::route('artworks.show', $artwork->id) }}" class="btn btn-default"><i class="fa fa-external-link"></i></a>
+		@if(!empty($artwork->auction_link))
+		<a href="{{ $artwork->auction_link }}" class="btn btn-default"><i class="fa fa-gavel"></i></a>
+		@endif
 	    </div>
+	    {{ Form::close() }}
 	</td>
     </tr>
     @endforeach
