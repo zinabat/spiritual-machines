@@ -7,8 +7,10 @@ use \Image;
 class Thumbnail extends Upload {
 
     protected $original;
+    protected $largestImage;
     protected $imageLib;
     public $localPath = '/artwork';
+    public $calcedTarget = array();
     public $target = array(
 	'height' => null,
 	'width' => null,
@@ -24,16 +26,16 @@ class Thumbnail extends Upload {
     public function cropFromCenter($imageObject) {
 	$x = 0;
 	$y = 0;
-	if ($this->target['width'] < $this->original->width()) {
+	if ($this->calcedTarget['width'] < $this->original->width()) {
 	    //half of the difference between the widths is the distance to crop lengthwise.
-	    $x = (int) ceil(($this->original->width() - $this->target['width']) / 2);
+	    $x = (int) ceil(($this->original->width() - $this->calcedTarget['width']) / 2);
 	}
-	if ($this->target['height'] < $this->original->height()){
+	if ($this->calcedTarget['height'] < $this->original->height()){
 	    //half of the difference between the heights is the distance to crop heightwise.
-	    $y = (int) ceil(($this->original->height() - $this->target['height']) / 2);
+	    $y = (int) ceil(($this->original->height() - $this->calcedTarget['height']) / 2);
 	}
 	
-	return $imageObject->crop($this->target['width'], $this->target['height'], $x, $y);
+	return $imageObject->crop($this->calcedTarget['width'], $this->calcedTarget['height'], $x, $y);
     }
 
     /**
@@ -48,23 +50,61 @@ class Thumbnail extends Upload {
 	$this->file = $file;
 	$this->uploadFolder = $this->makeFolders();
 
-	if ( !is_null($this->target['ratio']) ) $this->setTargetRatio();
-
 	$this->setTargetPath();
 	$this->saveOriginal();
-
+	$this->createLargestSize();
+	$this->createOtherSizes();
+	
+	return true;
+    }
+    
+    public function createLargestSize(){
+	$this->calcedTarget = $this->getLargestTargetSize();
+	
+	if ( !is_null($this->target['ratio']) ) $this->setTargetRatio();
+	
 	/* If the image ratio is different than the target, we need to calculate which dimension to resize by.
 	 * Then we have to crop it from the center.
 	 */
 	if ($this->original->ratio != $this->target['ratio']) {
-	    $newImage = $this->resizeProportionally( $this->target );
-	    $this->cropFromCenter($newImage);
+	    $this->setTargetDimensions();
+	    $this->largestImage = $this->resizeProportionally($this->calcedTarget);
+	    $this->cropFromCenter($this->largestImage);
 	} else {
-	    $newImage = $this->original->resize($this->target['width'], null, function($constraint){
+	    $this->largestImage = $this->original->resize($this->calcedTarget['width'], null, function($constraint){
 		$constraint->aspectRatio();
 	    });
 	}
-	return $newImage->save( str_replace('.', '_'.$this->target['width'].'.', $this->target['path']) );
+	$this->largestImage->save( $this->getPathWithSuffix($this->calcedTarget['width']) );
+    }
+    
+    public function createOtherSizes(){
+	if(!is_array($this->target['width']) || empty($this->target['width'])) return;
+	
+	foreach($this->target['width'] as $width){
+	    $this->largestImage
+		    ->resize($width, null, function($constraint){
+			$constraint->aspectRatio();
+		    })
+		    ->save( $this->getPathWithSuffix($width) );
+	}
+    }
+    
+    public function getPathWithSuffix($string){
+	return str_replace('.', '_'.$string.'.', $this->target['path']);
+    }
+    
+    public function getLargestTargetSize(){
+	$target = array();
+	foreach( array('width', 'height') as $dimen){
+	    if(is_array($this->target[$dimen])){
+		arsort($this->target[$dimen]);
+		$target[$dimen] = array_shift( $this->target[$dimen] );
+	    } else {
+		$target[$dimen] = $this->target[$dimen];
+	    }
+	}
+	return $target;
     }
 
     public function resizeProportionally( $target ) {
@@ -82,15 +122,14 @@ class Thumbnail extends Upload {
 
     public function setTargetRatio() {
 	$ints = explode(":", $this->target['ratio'] );
-	$this->target['ratio'] = (int) $ints[0] / (int) $ints[1];
-	$this->setTargetDimensions();
+	$this->calcedTarget['ratio'] = (int) $ints[0] / (int) $ints[1];
     }
     
     public function setTargetDimensions(){
-	if( is_null($this->target['width']) ){
-	    $this->target['width'] = (int) ceil($this->target['ratio'] * $this->target['height']);
+	if( is_null($this->target['width']) || empty($this->target['width'])){
+	    $this->calcedTarget['width'] = (int) ceil($this->calcedTarget['ratio'] * $this->calcedTarget['height']);
 	} else {
-	    $this->target['height'] = (int) ceil($this->target['width'] / $this->target['ratio']);
+	    $this->calcedTarget['height'] = (int) ceil($this->calcedTarget['width'] / $this->calcedTarget['ratio']);
 	}
     }
     

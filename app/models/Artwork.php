@@ -16,6 +16,7 @@ class Artwork extends \Eloquent {
     public $success;
     public $imageFile;
     public $old_thumbnail_path;
+    public $thumbnail_sizes = array(300, 900);
     
     /**
      * The attributes associated with database columns. Leaves these guys commented 
@@ -51,7 +52,8 @@ class Artwork extends \Eloquent {
 	
 	$this->thumbnail = App::make('Thumbnail');
 	$this->thumbnail->target = array(
-	    'width' => 300,
+	    'width' => $this->thumbnail_sizes,
+	    'height' => null,
 	    'ratio' => '16:9',
 	    'imageName' => $this->generateNameFromTitle()
 	);
@@ -68,9 +70,13 @@ class Artwork extends \Eloquent {
     
     public function deleteThumbnails(){
 	$path = asset($this->old_thumbnail_path);
-	if( file_exists(asset($this->old_thumbnail_path)) ){
+	if( file_exists($path) ){
 	    unlink($path);
-	    unlink(str_replace('.', '_300.', $path));
+	    foreach($this->thumbnail_sizes as $size){
+		$this_size = str_replace('.', '_'.$size.'.', $path);
+		if( file_exists($this_size) )
+		    unlink($this_size);
+	    }
 	}
     }
     
