@@ -21,15 +21,9 @@
 	</form>
     </div>
 </nav>
-<ul class="pagination pull-right no-mt">
-    <li><a href="#">&laquo;</a></li>
-    <li class="active"><a href="#">1</a></li>
-    <li><a href="#">2</a></li>
-    <li><a href="#">3</a></li>
-    <li><a href="#">4</a></li>
-    <li><a href="#">5</a></li>
-    <li><a href="#">&raquo;</a></li>
-</ul>
+<div class="pull-right">
+    {{ $artworks->links() }}
+</div>
 <strong>Sort by: </strong>
 <div class="btn-group" style="margin-right:15px">
     <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">Date Added</button>
@@ -40,7 +34,7 @@
     </ul>
     <button class="btn btn-info"><i class="fa fa-caret-down"></i></button>
 </div>
-<strong>2</strong> total pieces.
+<strong>{{ $artworks->count() }}</strong> total pieces.
 
 <table class="table table-hover table-portfolio" cellspacing="0">
     <thead>
@@ -52,37 +46,39 @@
 	<th>Description</th>
 	<th>Actions</th>
     </thead>
+    @if($artworks->count() > 0)
+    @foreach($artworks as $artwork)
     <tr>
-	<td><img src="http://snapsort.com/learn/movie-capability/images/sixteen-by-nine-example.jpg" alt=""></td>
-	<td>Sep 12, 2014</td>
-	<td>Feb 01, 2013</td>
-	<td>The Wind's Face</td>
-	<td>$342</td>
-	<td>Lorem ipsum dolor sit amet...</td>
 	<td>
+	    @if(empty($artwork->thumbnail_path))
+	    <img src="http://snapsort.com/learn/movie-capability/images/sixteen-by-nine-example.jpg" alt="">
+	    @else
+	    {{ $artwork->getThumbnail(300) }}
+	    @endif
+	</td>
+	<td>{{ $artwork->created_at }}</td>
+	<td>{{ $artwork->date_created }}</td>
+	<td>{{ $artwork->title }}</td>
+	<td>${{ $artwork->sold_price }}</td>
+	<td>{{ $artwork->description }}</td>
+	<td>
+	    {{ Form::open(array('method' => 'delete', 'route' => array('admin.artworks.destroy', $artwork->id) )) }}
 	    <div class="btn-group">
-		<button class="btn btn-danger"><i class="fa fa-trash"></i></button>
-		<button class="btn btn-default"><i class="fa fa-pencil"></i></button>
-		<button class="btn btn-default"><i class="fa fa-share"></i></button>
-		<button class="btn btn-default"><i class="fa fa-external-link"></i></button>
+		<button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this artwork?')"><i class="fa fa-trash"></i></button>
+		<a href="{{ URL::route('admin.artworks.edit', $artwork->id) }}" class="btn btn-default"><i class="fa fa-pencil"></i></a>
+		<a href="{{ URL::route('artworks.show', $artwork->id) }}" class="btn btn-default"><i class="fa fa-external-link"></i></a>
+		@if(!empty($artwork->auction_link))
+		<a href="{{ $artwork->auction_link }}" class="btn btn-default"><i class="fa fa-gavel"></i></a>
+		@endif
 	    </div>
+	    {{ Form::close() }}
 	</td>
     </tr>
+    @endforeach
+    @else
     <tr>
-	<td><img src="http://snapsort.com/learn/movie-capability/images/sixteen-by-nine-example.jpg" alt=""></td>
-	<td>Sep 12, 2014</td>
-	<td>Feb 01, 2013</td>
-	<td>The Wind's Face</td>
-	<td>$342</td>
-	<td>Lorem ipsum dolor sit amet...</td>
-	<td>
-	    <div class="btn-group">
-		<button class="btn btn-danger"><i class="fa fa-trash"></i></button>
-		<button class="btn btn-default"><i class="fa fa-pencil"></i></button>
-		<button class="btn btn-default"><i class="fa fa-share"></i></button>
-		<button class="btn btn-default"><i class="fa fa-external-link"></i></button>
-	    </div>
-	</td>
+	<td colspan="7">You don't have any artworks yet! Why not {{ link_to('admin/artworks/create', 'add one now') }}?</td>
     </tr>
+    @endif
 </table>
 @stop

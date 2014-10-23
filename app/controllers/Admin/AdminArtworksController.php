@@ -19,7 +19,7 @@ class AdminArtworksController extends \BaseController {
      */
     public function index()
     {
-	return View::make('admin/portfolio');
+	return View::make('admin/portfolio')->with('artworks', $this->artwork->paginate(20));
     }
 
     /**
@@ -30,7 +30,7 @@ class AdminArtworksController extends \BaseController {
      */
     public function create()
     {
-	return View::make('admin/artwork-create');
+	return View::make('admin/artwork-create')->with('mode', 'create');
     }
 
     /**
@@ -39,29 +39,24 @@ class AdminArtworksController extends \BaseController {
      *
      * @return Response
      */
-    public function store()
+    public function store($msg = 'Artwork has been added.')
     {
+	$this->artwork->success = $msg;
 	//fill the artwork object and sanitize.
-	$this->artwork->fill( Input::all() )->sanitize();
+	$this->artwork->fill( Input::all() );
+	
+	//handle images
+	if(Input::hasFile('imageFile')){
+	    $this->artwork->imageFile = Input::file('imageFile');
+	}
 	
 	if( $this->artwork->isValid() ){
+	    $this->artwork->createThumbnails();
 	    $this->artwork->save();
-	    return Redirect::to('admin/artworks/' . $this->artwork->id . '/edit')->withSuccess('Artwork has been added.');
+	    return Redirect::to('admin/artworks/' . $this->artwork->id . '/edit')->withSuccess($this->artwork->success);
 	}
 	
 	return Redirect::back()->withInput()->withErrors( $this->artwork->errors );
-    }
-
-    /**
-     * Display the specified resource.
-     * GET /admin/artworks/{id}
-     *
-     * @param  object $artwork
-     * @return Response
-     */
-    public function show($artwork)
-    {
-	//
     }
 
     /**
@@ -73,7 +68,7 @@ class AdminArtworksController extends \BaseController {
      */
     public function edit($id)
     {
-	return View::make('admin/artwork-create')->with('artwork', $this->artwork->find($id) );
+	return View::make('admin/artwork-create')->with('artwork', $this->artwork->find($id) )->with('mode', 'edit');
     }
 
     /**
@@ -85,7 +80,8 @@ class AdminArtworksController extends \BaseController {
      */
     public function update($id)
     {
-	    //
+	$this->artwork = $this->artwork->find($id);
+	return $this->store('Artwork has been updated.');
     }
 
     /**
@@ -97,7 +93,8 @@ class AdminArtworksController extends \BaseController {
      */
     public function destroy($id)
     {
-	    //
+	$this->artwork->destroy($id);
+	return Redirect::to('admin/artworks')->withSuccess('Artwork deleted.');
     }
 
 }
