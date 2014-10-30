@@ -10,13 +10,7 @@
 | and give it the Closure to execute when that URI is requested.
 |
 */
-Route::get('/', function(){
-    return View::make('index');
-});
-
-Route::get('portfolio', function(){
-    return View::make('portfolio');
-});
+Route::get('/', 'ArtworksController@auction');
 
 Route::get('about', function(){
     return View::make('about');
@@ -27,7 +21,7 @@ Route::get('contact', function(){
 });
 
 // public routes
-Route::resource('artworks', 'ArtworksController', array(
+Route::resource('portfolio', 'ArtworksController', array(
     'only' => array('index', 'show')));
 Route::resource('sessions', 'SessionsController', array(
     'only' => array('create', 'store', 'destroy')));

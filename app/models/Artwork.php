@@ -90,6 +90,29 @@ class Artwork extends \Eloquent {
 	return HTML::image(str_replace('.', '_'.$size.'.', $this->thumbnail_path));
     }
     
+    public function isActive(){
+	return (empty($this->sold_price) && !empty($this->auction_link));
+    }
+    
+    /*
+     * Scopes
+     * Yay for re-using query logic.
+     */
+    public function scopeActive($query)
+    {
+        return $query->where('sold_price', '=', 0)->where('auction_link', '!=', '');
+    }
+    
+    public function scopeInactive($query)
+    {
+        return $query->where('sold_price', '>', 0);
+    }
+    
+    public function scopeSummary($query)
+    {
+        return $query->select('id', 'title', 'created_at', 'date_created', 'thumbnail_path', 'auction_link', 'sold_price');
+    }
+    
     /**
      * Accessors
      * 
