@@ -12,3 +12,5 @@
 .navbar-admin a, .navbar-admin a:hover, .navbar-admin a:active, .navbar-admin a:focus{color:#fff}
 .navbar-admin .nav>li>a:hover, .navbar-admin .nav>li>a:focus{background-color:#EEB55F}
 .nav>li>a:hover, .nav>li>a:focus{background-color:rgba(126, 187, 103, 0.3)}
+
+.pagination{margin-top:0}

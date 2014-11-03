@@ -2,9 +2,17 @@
 
 @section('inner_content')
 <h1>Add a Piece</h1>
-<a href="{{ URL::to('admin/artwork') }}" class="btn btn-info"><i class="fa fa-arrow-left"></i> Back to Artwork</a>
+<a href="{{ URL::to('admin/artworks') }}" class="btn btn-info"><i class="fa fa-arrow-left"></i> Back to Artwork</a>
 <br><br>
-{{ Form::open() }}
+
+@if( $mode == 'create' )
+{{ Form::open(array('route' =>  'admin.artworks.store', 'files' => true) ) }}
+@else
+{{ Form::model($artwork, array('route' =>  array('admin.artworks.update', $artwork->id), 'method' => 'put', 'files' => true) ) }}
+@endif
+
+@include('includes.errors')
+
 <div class="form-group">
     {{ Form::label('title') }}
     {{ Form::text('title', null, array('class' => 'form-control')) }}
@@ -34,8 +42,12 @@
     </span>
 </div>
 <div class="form-group">
-    {{ Form::label('thumbnail') }}
-    {{ Form::file('thumbnail', array('class' => 'form-control')) }}
+    {{ Form::label('imageFile') }}
+    @if($mode == 'edit' && $artwork->hasThumbnail())
+    <br>
+    {{ $artwork->getThumbnail(300) }}
+    @endif
+    {{ Form::file('imageFile', array('class' => 'form-control')) }}
 </div>
 <div class="form-group">
     {{ Form::label('date_created', 'Date Created') }}

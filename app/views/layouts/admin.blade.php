@@ -49,6 +49,10 @@
 	    </ul>
 	</div>
 	<div class="col-md-10">
+	    @if($success)
+	    <div class="alert alert-success">{{ $success }}</div>
+	    @endif
+	    
 	    @yield('inner_content')
 	</div>
     </div>

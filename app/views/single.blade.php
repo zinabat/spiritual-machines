@@ -6,7 +6,7 @@
 @stop
 
 @section('left_corner')
-<a href="#" data-toggle="tooltip" data-placement="right" title="Thumbnail View"><i class="fa fa-th fa-3x"></i></a>
+<a href="{{ URL::route('portfolio.index') }}" data-toggle="tooltip" data-placement="right" title="Portfolio View"><i class="fa fa-th fa-3x"></i></a>
 @stop
 
 @section('inner_content')
@@ -17,20 +17,27 @@
 		<a href="#" title="Previous" class="prev"><i class="fa fa-angle-left"></i></a>
 		<a href="#" title="Next" class="next"><i class="fa fa-angle-right"></i></a>
 	    </nav>
-	    <div class="embed-responsive embed-responsive-16by9">
+	    {{ $artwork->getThumbnail(900) }}
+	    <!--<div class="embed-responsive embed-responsive-16by9">
 		<iframe src="//www.youtube.com/embed/LP_-P7ZcWZU" allowfullscreen></iframe>
-	    </div>
+	    </div>-->
 	</div>
 	<br>
 	<div class="row">
 	    <div class="col-md-3 text-center">
-		<div class="price">$100</div>
+		@if($artwork->isActive())
+		<div class="price">$</div>
 		<small class="text-muted">current bid</small><br><br>
-		<button class="btn btn-primary btn-lg full-width">bid now</button>
+		<a href="{{ $artwork->auction_link }}" class="btn btn-primary btn-lg full-width">bid now</a>
+		@else
+		<div class="price">${{ $artwork->sold_price }}</div>
+		<br>
+		<button class="btn btn-danger btn-lg full-width" disabled>auction closed</button>
+		@endif
 	    </div>
 	    <div class="col-md-9">
-		<h3 class="text-success no-mt">Title of Work</h3>
-		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+		<h3 class="text-success no-mt">{{ $artwork->title }}</h3>
+		<p>{{ $artwork->description }}</p>
 	    </div>
 	</div>
     </div>

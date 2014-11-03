@@ -27,18 +27,5 @@
 </div>
 <hr>
 <p>More items up for auction now.</p>
-<div class="row">
-    <div class="col-md-3">
-	<a href="#"><img src="http://snapsort.com/learn/movie-capability/images/sixteen-by-nine-example.jpg" alt=""></a>
-    </div>
-    <div class="col-md-3">
-	<a href="#"><img src="http://snapsort.com/learn/movie-capability/images/sixteen-by-nine-example.jpg" alt=""></a>
-    </div>
-    <div class="col-md-3">
-	<a href="#"><img src="http://snapsort.com/learn/movie-capability/images/sixteen-by-nine-example.jpg" alt=""></a>
-    </div>
-    <div class="col-md-3">
-	<a href="#"><img src="http://snapsort.com/learn/movie-capability/images/sixteen-by-nine-example.jpg" alt=""></a>
-    </div>
-</div>
+@include('includes.portfolio-thumbs')
 @stop

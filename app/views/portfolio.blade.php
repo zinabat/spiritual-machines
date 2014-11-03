@@ -1,26 +1,12 @@
 @extends('layouts.basic')
 
+@section('left_corner')
+<a href="{{ URL::route('portfolio.show', 0) }}" data-toggle="tooltip" data-placement="right" title="Slideshow View"><i class="fa fa-play fa-3x"></i></a>
+@stop
+
 @section('inner_content')
     <h1>Portfolio</h1>
     <p>This page will render thumbnails of all artworks.</p>
-    <div class="row portfolio-thumbs">
-	<div class="col-md-3">
-	    <a href="#">
-		<div class="price-tag">$357</div>
-		<img src="http://snapsort.com/learn/movie-capability/images/sixteen-by-nine-example.jpg" alt="">
-	    </a>
-	</div>
-	<div class="col-md-3">
-	    <a href="#">
-		<div class="price-tag">SOLD</div>
-		<img src="http://snapsort.com/learn/movie-capability/images/sixteen-by-nine-example.jpg" alt="">
-	    </a>
-	</div>
-	<div class="col-md-3">
-	    <a href="#"><img src="http://snapsort.com/learn/movie-capability/images/sixteen-by-nine-example.jpg" alt=""></a>
-	</div>
-	<div class="col-md-3">
-	    <a href="#"><img src="http://snapsort.com/learn/movie-capability/images/sixteen-by-nine-example.jpg" alt=""></a>
-	</div>
-    </div>
+    @include('includes.portfolio-thumbs')
+    
 @stop
