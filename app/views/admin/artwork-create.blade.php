@@ -73,11 +73,17 @@ var toggleActiveAuction = function(){
     $('.form-auction').prop('disabled', true);
     
     $(this).addClass('active');
-    $('#' + $(this).data('target') ).prop('disabled', false).focus();
+    $('#' + $(this).data('target') ).prop('disabled', false);
 };
 
 $(document).ready(function(){
     $('[data-toggle="auction"]').click(toggleActiveAuction);
+    
+    if($('#sold_price').val() !== ''){
+	$('[data-target="sold_price"]').trigger('click');
+    } else if($('#auction_link').val() !== ''){
+	$('[data-target="auction_link"]').trigger('click');
+    }
 });
 </script>
 @stop

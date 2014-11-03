@@ -5,5 +5,5 @@
 <p>Welcome to your dashboard. From here you can view recent changes. Maybe eBay infos later but that's kinda dumb.</p>
 
 <h3>Quick Links</h3>
-<a href="#" class="btn btn-primary"><i class="fa fa-plus"></i> Add a New Piece</a>
+<a href="{{ URL::route('admin.artworks.create') }}" class="btn btn-primary"><i class="fa fa-plus"></i> Add a New Piece</a>
 @stop
