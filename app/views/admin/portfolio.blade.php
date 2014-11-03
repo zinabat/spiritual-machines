@@ -66,7 +66,7 @@
 	    <div class="btn-group">
 		<button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this artwork?')"><i class="fa fa-trash"></i></button>
 		<a href="{{ URL::route('admin.artworks.edit', $artwork->id) }}" class="btn btn-default"><i class="fa fa-pencil"></i></a>
-		<a href="{{ URL::route('artworks.show', $artwork->id) }}" class="btn btn-default"><i class="fa fa-external-link"></i></a>
+		<a href="{{ URL::route('portfolio.show', $artwork->id) }}" class="btn btn-default"><i class="fa fa-external-link"></i></a>
 		@if(!empty($artwork->auction_link))
 		<a href="{{ $artwork->auction_link }}" class="btn btn-default"><i class="fa fa-gavel"></i></a>
 		@endif

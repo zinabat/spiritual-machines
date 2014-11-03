@@ -39,5 +39,19 @@ class ArtworksController extends \BaseController {
 	}
 	 return View::make('single')->with('artwork', $artwork);
     }
+    
+    /**
+     * Display active listings.
+     *
+     * @return Response
+     */
+    public function auction()
+    {
+	$artworks = $this->artwork->summary()->active()->get();
+	unset($artworks[0]);
+	return View::make('index')
+		->with('artworks', $artworks)
+		->with('newest', $this->artwork->active()->first());
+    }
 
 }
