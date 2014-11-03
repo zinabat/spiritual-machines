@@ -18,12 +18,12 @@
     {{ Form::text('title', null, array('class' => 'form-control')) }}
 </div>
 <div class="form-group">
-    {{ Form::label('ebay_link', 'Is this item currently being auctioned?') }}
+    {{ Form::label('auction_link', 'Is this item currently being auctioned?') }}
     <div class="input-group">
 	<span class="input-group-btn">
-	    <button class="btn btn-default" type="button" data-toggle="auction" data-target="ebay_link">Yes</button>
+	    <button class="btn btn-default" type="button" data-toggle="auction" data-target="auction_link">Yes</button>
 	</span>
-	{{ Form::text('ebay_link', null, array('class' => 'form-control form-auction', 'placeholder' => 'http://', 'disabled' => true)) }}
+	{{ Form::text('auction_link', null, array('class' => 'form-control form-auction', 'placeholder' => 'http://', 'disabled' => true)) }}
     </div>
     <span class="help-block">
 	Link to eBay auction page. <a href="#" title="click for help"><i class="fa fa-question-circle"></i></a>
@@ -58,7 +58,7 @@
     {{ Form::textarea('description', null, array('class' => 'form-control')) }}
 </div>
 <div class="form-group">
-    {{ Form::submit('Add Piece', array('class' => 'btn btn-primary btn-lg')) }}
+    {{ Form::submit($mode == 'edit' ? 'Update' : 'Add Piece', array('class' => 'btn btn-primary btn-lg')) }}
 </div>
 {{ Form::close() }}
 @stop

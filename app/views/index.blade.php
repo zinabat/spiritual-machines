@@ -7,17 +7,16 @@
     <div class="col-md-4">
 	<div class="row">
 	    <div class="col-md-5 text-center">
-		<div class="price">$100</div>
+		<div class="price">$</div>
 		<small class="text-muted">current bid</small>
 	    </div>
 	    <div class="col-md-7">
 		<br>
-		<button class="btn btn-primary btn-lg full-width">bid now</button>
+		<a href="{{ $newest->auction_link }}" class="btn btn-primary btn-lg full-width">bid now</a>
 	    </div>
 	</div>
-	<h3 class="text-success">Title of Work</h3>
-	<p>Lorem ipsum dolor met.</p>
-	<p><a href="#">Read more <i class="fa fa-caret-right"></i></a></p>
+	<h3 class="text-success">{{ $newest->title }}</h3>
+	<p>{{ $newest->description }}</p>
     </div>
     <div class="col-md-8">
 	<div class="embed-responsive embed-responsive-16by9">
