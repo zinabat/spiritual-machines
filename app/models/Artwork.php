@@ -94,6 +94,10 @@ class Artwork extends \Eloquent {
 	return (empty($this->sold_price) && !empty($this->auction_link));
     }
     
+    public function getEbayPrice(){
+	//
+    }
+    
     /*
      * Scopes
      * Yay for re-using query logic.
